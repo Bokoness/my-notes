@@ -1,0 +1,24 @@
+<% include partials/header %>
+
+<div class="container notes-container">
+    <div class="row">
+        <% notes.forEach((note) => {  %>
+            <div class="note" id="<%=note.id%>">
+                <input class="note-title" type="text" value="<%=note.title%>"/>
+                <input class="note-content" type="text" value="<%=note.content%>"/>
+                <br/>
+                <button class="delete_button">delete</button>
+                <button class="update_button">update</button>
+            </div>
+        <% }); %>
+    </div> <br>
+    
+    <form class="form-group" method="POST" action='/notes'>
+        <h1>Add note</h1>
+        <input class="form-control" type="text" name="title" placeholder="title"/>
+        <input class="form-control" type="text" name="content" placeholder="content"/>
+        <input class="btn btn-block btn-primary" type="submit"/>
+    </form>
+</div>
+
+<% include partials/footer %>
