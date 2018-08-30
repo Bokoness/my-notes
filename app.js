@@ -44,7 +44,7 @@ app.post("/notes", (req, res) => {
 
 app.post("/notes/update", (req, res) => {
    let updateNote = req.body;
-   let q = `UPDATE notes SET title="${updateNote.title}", content="${updateNote.content}" WHERE unique_id=${updateNote.id}`;
+   let q = `UPDATE notes SET title="${updateNote.title}", content="${updateNote.content}" WHERE id=${updateNote.id}`;
     connection.query(q, (err, result) => {
         if(err)
             console.log(err);
