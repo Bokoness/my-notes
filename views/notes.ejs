@@ -1,24 +1,68 @@
 <% include partials/header %>
 
-<div class="container notes-container">
-    <div class="row">
+<div class="ui grid">
         <% notes.forEach((note) => {  %>
-            <div class="note" id="<%=note.id%>">
-                <input class="note-title" type="text" value="<%=note.title%>"/>
-                <input class="note-content" type="text" value="<%=note.content%>"/>
-                <br/>
-                <button class="delete_button">delete</button>
-                <button class="update_button">update</button>
-            </div>
+                <div class="note">
+                    <div class="ui card" id="<%=note.id%>">
+                        <div class="content">
+                            <div class="header"><%=note.title%>"</div>
+                        </div>
+                        <div class="content">
+                            <%=note.content%>
+                        </div>
+                    </div>
+                </div>
+           
         <% }); %>
-    </div> <br>
-    
-    <form class="form-group" method="POST" action='/notes'>
-        <h1>Add note</h1>
-        <input class="form-control" type="text" name="title" placeholder="title"/>
-        <input class="form-control" type="text" name="content" placeholder="content"/>
-        <input class="btn btn-block btn-primary" type="submit"/>
-    </form>
+ </div>       
+
+
+<button id="cliko">cliko</button>
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Profile Picture
+  </div>
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="/images/avatar/large/chris.jpg">
+    </div>
+    <div class="description">
+      <div class="ui header">We've auto-chosen a profile image for you.</div>
+      <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+      <p>Is it okay to use this photo?</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Nope
+    </div>
+    <div class="ui positive right labeled icon button">
+      Yep, that's me
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
 </div>
+
+
+
+<div class="ui container">
+    <form class="ui form" method="POST" action='/notes'>
+        <div class="ui raised segment">
+            <h1>Add note</h1>
+        </div>
+
+        <div class="field">
+            <input class="ui input" type="text" name="title" placeholder="title"/>
+        </div>
+        <div class="field">
+            <textarea name="content" row="2"></textarea>
+        </div>
+        <div class="field">
+            <input class="ui orange basic button" type="submit"/>    
+        </div>
+    </form>
+</div>   
+
 
 <% include partials/footer %>

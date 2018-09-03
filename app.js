@@ -5,6 +5,7 @@ let mysql= require("mysql");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
+app.use(express.static("public"));
 
 //connect to mysql
 let connection = mysql.createConnection({
@@ -13,10 +14,23 @@ let connection = mysql.createConnection({
   database: 'mynotes'
 });
 
+//select mynotes database
+connection.query('USE mynotes', (err, results) => {
+    if(err)
+        console.log(err);
+});
+
+connection.query(`SET character_set_connection=utf8; SET character_set_connection=utf8; SET character_set_database=utf8; SET character_set_results=utf8; `, (err, results) => {
+    if(err)
+        err;
+});
+
+
 app.get("/", (req, res) => {
    res.send("this will be the main page")
 });
 
+//get notes
 app.get("/notes", (req, res) => {
    console.log("Main page");
    let q = "SELECT * FROM notes";
@@ -42,9 +56,13 @@ app.post("/notes", (req, res) => {
 
 });
 
-app.post("/notes/update", (req, res) => {
+//update notes
+app.put("/notes/:id", (req, res) => {
    let updateNote = req.body;
-   let q = `UPDATE notes SET title="${updateNote.title}", content="${updateNote.content}" WHERE id=${updateNote.id}`;
+   let id = req.body.id;
+   console.log("=======================================")
+   console.log(req.body);
+   let q = `UPDATE notes SET title="${updateNote.title}", content="${updateNote.content}" WHERE id=${id}`;
     connection.query(q, (err, result) => {
         if(err)
             console.log(err);
@@ -55,7 +73,7 @@ app.post("/notes/update", (req, res) => {
 });
 
 //delete a note
-app.post("/notes/delete", (req, res) => {
+app.delete("/notes/:id", (req, res) => {
     let id = req.body.id;
     let q = `DELETE FROM notes WHERE id=${id}`;
     connection.query(q, (err, result) => {
