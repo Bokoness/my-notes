@@ -1,0 +1,17 @@
+<form id="update-note-modal" class="show-note ui modal form"  method="POST" action="notes/<%= note.id %>">
+        <div class="header">
+            <input class="ui input" type="text" name="title" value="<%=note.title%>">
+        </div>    
+        <div class="content">
+            <textarea name="content" row="2"><%=note.content%></textarea>
+        </div>
+        <div class="actions">
+            <button id="delete-note-button" class="ui circular google plus icon button">
+                <i class="trash alternate big icon"></i>
+            </button>
+            <button id="update-note-button" class="ui circular twitter icon button">
+                <i class="save outline big icon"></i>
+            </button>
+        </div>
+</form>
+

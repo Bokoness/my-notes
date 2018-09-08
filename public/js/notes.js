@@ -1,24 +1,36 @@
-
-
 $(document).ready(() => {
-      $('#cliko').click(function(){
-        $('.ui.modal').modal('show');   
+    let updateNoteId = "";
+    
+    $("#add-note-icon").click(() => {
+       $("#add-note-modal").modal('show'); 
     });
-$('.ui.modal').modal('show'); 
-
-
-    //update note
-
-    $(".update-button").click(function () {
-        let id = $(this).parent().attr("id");
-        let title = $("#" + id + " .note-title").val();
-        let content = $("#" + id + " .note-content").val();
-        console.log("Posting: ",title, content);
-        $.ajax({
-            url: `/notes/${id}`,
-            method: 'put',
-            data: {id, title, content}
-        });
+    
+    $(".note").click(() => {
+        console.log($(this).attr("class"));
+        $("#update-note-modal").modal({
+            onHidden: () => {
+                console.log($(this).attr("class"));
+            }
+        }).modal('show')
+    });
+    
+    $('#update-note-modal').modal({
+            onHidden: function() {
+                alert('here');
+            }
+    });
+    
+    $("#update-note-button").click(function () {
+        
+        // let id = $(this).parent().attr("id");
+        // let title = $("#" + id + " .note-title").val();
+        // let content = $("#" + id + " .note-content").val();
+        // console.log("Posting: ",title, content);
+        // $.ajax({
+        //     url: `/notes/${id}`,
+        //     method: 'put',
+        //     data: {id, title, content}
+        // });
     });  
     
     //delete note

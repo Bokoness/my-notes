@@ -2,10 +2,12 @@ let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let mysql= require("mysql");
+let methodOverride = require("method-override");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
+
 
 //connect to mysql
 let connection = mysql.createConnection({
@@ -24,7 +26,6 @@ connection.query(`SET character_set_connection=utf8; SET character_set_connectio
     if(err)
         err;
 });
-
 
 app.get("/", (req, res) => {
    res.send("this will be the main page")
@@ -59,7 +60,8 @@ app.post("/notes", (req, res) => {
 //update notes
 app.put("/notes/:id", (req, res) => {
    let updateNote = req.body;
-   let id = req.body.id;
+   console.log(req.params.id);
+   let id = req.params.id;
    console.log("=======================================")
    console.log(req.body);
    let q = `UPDATE notes SET title="${updateNote.title}", content="${updateNote.content}" WHERE id=${id}`;

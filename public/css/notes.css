@@ -1,3 +1,20 @@
+.ui.container {
+    margin-top: 5%;
+}
+
 .note {
     margin-bottom: 25px;
+}
+
+#add-note-icon {
+    background-color: #3b5a9a;
+    color: white;
+    position: fixed;
+    z-index:10;
+    bottom: 5%;
+    left: 0.5%;
+}
+
+#delete-note-button {
+    float: left;
 }

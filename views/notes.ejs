@@ -1,9 +1,9 @@
 <% include partials/header %>
-
-<div class="ui grid">
+<div class="ui container">
+    <div class="ui grid">
         <% notes.forEach((note) => {  %>
-                <div class="note">
-                    <div class="ui card" id="<%=note.id%>">
+                <div class="note" id="<%=note.id%>">
+                    <div class="ui card">
                         <div class="content">
                             <div class="header"><%=note.title%>"</div>
                         </div>
@@ -11,58 +11,16 @@
                             <%=note.content%>
                         </div>
                     </div>
+                    <% include partials/update-note-modal %>
                 </div>
-           
         <% }); %>
- </div>       
-
-
-<button id="cliko">cliko</button>
-<div class="ui modal">
-  <i class="close icon"></i>
-  <div class="header">
-    Profile Picture
-  </div>
-  <div class="image content">
-    <div class="ui medium image">
-      <img src="/images/avatar/large/chris.jpg">
-    </div>
-    <div class="description">
-      <div class="ui header">We've auto-chosen a profile image for you.</div>
-      <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
-      <p>Is it okay to use this photo?</p>
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui black deny button">
-      Nope
-    </div>
-    <div class="ui positive right labeled icon button">
-      Yep, that's me
-      <i class="checkmark icon"></i>
-    </div>
-  </div>
+    </div>       
 </div>
 
+<% include partials/new-note-modal %>
+<button id="add-note-icon" class="ui circular icon button">
+  <i class="big plus icon"></i>
+</button>
 
-
-<div class="ui container">
-    <form class="ui form" method="POST" action='/notes'>
-        <div class="ui raised segment">
-            <h1>Add note</h1>
-        </div>
-
-        <div class="field">
-            <input class="ui input" type="text" name="title" placeholder="title"/>
-        </div>
-        <div class="field">
-            <textarea name="content" row="2"></textarea>
-        </div>
-        <div class="field">
-            <input class="ui orange basic button" type="submit"/>    
-        </div>
-    </form>
-</div>   
-
-
+ 
 <% include partials/footer %>
