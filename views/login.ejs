@@ -1,0 +1,28 @@
+<% include partials/header %>
+
+<div class="ui container">
+    <% if (typeof error == 'object' && error) { %>
+    <div class="ui error message">
+        <div class="header">Something went wrong</div>
+        <%= error.errorMessage %>             
+    </div>
+    <% } %>
+    <h1>Log in</h1>
+    <form class="ui equal width form" action="/login" method="POST">
+        <div class="fields">
+            <div class="field">
+                <label>Em@il</label>
+                <input name="email" placeholder="Username" type="email">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Password</label>
+                <input name="password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); cursor: auto;" autocomplete="off" type="password">
+            </div>
+        </div>
+        <button class="ui fluid positive button">Register</button>
+    </form>
+</div>
+
+  <% include partials/footer %>

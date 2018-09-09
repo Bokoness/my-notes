@@ -5,13 +5,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.css">
         <link rel="stylesheet" href="/css/notes.css" />
-
     </head>
+
     <body>
-        <h2 class="ui header">
-            <i class="sticky note outline icon"></i>
-            <div id="header" class="content">
-                My Notes
-                <div class="sub header">GoogleKeep Like App</div>
+            <div id="site-header" class="ui stackable menu">
+                <div class="item">
+                    <i class="sticky note outline icon"></i>
+                    <div id="header" class="content">
+                            My Notes
+                    </div>
+                </div>
+                    <% if(typeof user == 'object' && user){ %><a class="item right float"><strong><%= user.firstName + " " + user.lastName%></strong></a> <% } %>
+                <a id="header-main-button" class="item" href="/logout"></a>
             </div>
-        </h2>

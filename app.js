@@ -3,17 +3,26 @@ let app = express();
 let bodyParser = require("body-parser");
 let mysql= require("mysql");
 let methodOverride = require("method-override");
+let sessions = require("client-sessions");
+let bcrypt = require("bcryptjs");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
+//setting up Mozilla sessions (client-sessions)
+app.use(sessions({
+    cookieName: "session",
+    secret: "Woosfsadf123sad",
+    duration: 60 * 60 * 1000 // 60 mins
+}));
 
 //connect to mysql
 let connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'bokoness',
-  database: 'mynotes'
+    host: 'localhost',
+    user: 'root',
+    password: 'bb8b9jqr',
+    database: 'mynotes'
 });
 
 //select mynotes database
@@ -22,32 +31,95 @@ connection.query('USE mynotes', (err, results) => {
         console.log(err);
 });
 
-connection.query(`SET character_set_connection=utf8; SET character_set_connection=utf8; SET character_set_database=utf8; SET character_set_results=utf8; `, (err, results) => {
-    if(err)
-        err;
-});
-
 app.get("/", (req, res) => {
-   res.send("this will be the main page")
+   res.send("you are now logged in");
 });
 
-//get notes
-app.get("/notes", (req, res) => {
-   console.log("Main page");
-   let q = "SELECT * FROM notes";
-   connection.query(q, (err, results) => {
+//==============
+//|  REGISTER  |
+//==============
+
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+app.post("/register", (req, res) => {
+    let newUser = req.body;
+    console.log(newUser.password);
+    let hash = bcrypt.hashSync(newUser.password, 14);
+    newUser.password = hash;
+    let q = `INSERT INTO users SET ?`;
+    connection.query(q, newUser, (err, result) => {
         if(err)
             console.log(err);
-        console.log(results);
-        res.render("notes", {notes: results});
+        else {
+               res.redirect("/login");   
+        }
    });
+});
+
+//====================
+//|  Login / Logout  |
+//====================
+
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+app.post("/login", (req, res) => {
+    let q = `SELECT * FROM users WHERE email="${req.body.email}"`;
+    connection.query(q, (err, result) => {
+        let user = result[0];
+        if(err)
+            console.log(err);
+        else {
+            if(!user || !bcrypt.compareSync(req.body.password, user.password) ) {
+                let error ={errorMessage: "Incorrent email / password"};
+                console.log(error);
+                return res.render("login", {error});
+            } else {
+                req.session.userId = user.id;
+                console.log("session added");
+                res.redirect("/notes");
+            }   
+        }
+   });
+});
+
+//logout
+app.get("/logout", (req, res) => {
+    req.session.reset();
+    res.redirect("/login");
+});
+
+//===========
+//|  NOTES  |
+//===========
+//get notes
+app.get("/notes", (req, res) => {
+   console.log(req.session);
+   let q = `SELECT * FROM users WHERE id=${req.session.userId}`;
+   connection.query(q, (err, user) => {
+       if(err) {
+            console.log(err);
+       } else {
+            let q = `SELECT * FROM notes WHERE userId=${user[0].id}`;
+            connection.query(q, (err, notes) => {
+            if(err) {
+                console.log(err);
+            } else {
+                res.render("notes", {user: {firstName: user[0].firstName, lastName: user[0].lastName}, notes});
+            }
+        });
+       }
+   })
 });
 
 // add a new note
 app.post("/notes", (req, res) => {
    let newNote = req.body;
-   let q = `INSERT INTO notes SET ?`;
-   connection.query(q, newNote, (err, result) => {
+   let q = `INSERT INTO mynotes.notes (title, content, userId) VALUES ('${newNote.title}', '${newNote.content}', ${req.session.userId})`;
+   connection.query(q, (err, result) => {
         if(err)
             console.log(err);
         else {
@@ -88,4 +160,5 @@ app.delete("/notes/:id", (req, res) => {
     })
 });
 
-app.listen(process.env.PORT, process.env.IP);
+// app.listen(process.env.PORT, process.env.IP);
+app.listen(3000, ()=> console.log("port 3000 is active"));

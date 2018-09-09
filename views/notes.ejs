@@ -1,20 +1,22 @@
 <% include partials/header %>
 <div class="ui container">
-    <div class="ui grid">
-        <% notes.forEach((note) => {  %>
-                <div class="note" id="<%=note.id%>">
-                    <div class="ui card">
-                        <div class="content">
-                            <div class="header"><%=note.title%>"</div>
+    <% if (typeof notes == 'object' && notes) { %>
+        <div class="ui grid">
+            <% notes.forEach((note) => {  %>
+                    <div class="note" id="<%=note.id%>">
+                        <div class="ui card">
+                            <div class="content">
+                                <div class="header"><%=note.title %></div>
+                            </div>
+                            <div class="content">
+                                <%= note.content %>
+                            </div>
                         </div>
-                        <div class="content">
-                            <%=note.content%>
-                        </div>
+                        <% include partials/update-note-modal %>
                     </div>
-                    <% include partials/update-note-modal %>
-                </div>
-        <% }); %>
-    </div>       
+            <% }); %>
+        </div>    
+    <% }; %>   
 </div>
 
 <% include partials/new-note-modal %>
