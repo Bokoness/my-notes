@@ -6,10 +6,8 @@ $(document).ready(() => {
     });
     
     $(".note").click(() => {
-        console.log($(this).attr("class"));
         $("#update-note-modal").modal({
             onHidden: () => {
-                console.log($(this).attr("class"));
             }
         }).modal('show')
     });

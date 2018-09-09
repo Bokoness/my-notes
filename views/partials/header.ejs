@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.css">
         <link rel="stylesheet" href="/css/notes.css" />
+        <link rel="stylesheet" href="/css/app.css" />
     </head>
 
     <body>
@@ -16,5 +17,5 @@
                     </div>
                 </div>
                     <% if(typeof user == 'object' && user){ %><a class="item right float"><strong><%= user.firstName + " " + user.lastName%></strong></a> <% } %>
-                <a id="header-main-button" class="item" href="/logout"></a>
+                <a id="header-main-button" class="item right float" href="/logout"></a>
             </div>

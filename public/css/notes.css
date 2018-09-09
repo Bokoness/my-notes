@@ -1,5 +1,5 @@
 .ui.container {
-    margin-top: 5%;
+    margin-top: 5%;   
 }
 
 .note {
@@ -12,7 +12,7 @@
     position: fixed;
     z-index:10;
     bottom: 5%;
-    left: 0.5%;
+    left: 2%;
 }
 
 #delete-note-button {

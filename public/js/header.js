@@ -6,17 +6,12 @@ switch (route) {
         break;
 
     case "register":
-        $("#header-main-button").text("login");
+        $("#header-main-button").append(`<i class="sign-in icon"></i>Login`);
         $("#header-main-button").attr("href", "/login");
     break;
 
     case "notes":
-        $("#header-main-button").text("logout");
+        $("#header-main-button").append(`<i class="sign-out icon"></i>Logout`);
         $("#header-main-button").attr("href", "/logout");
     break;  
-
-    default: 
-        $("#header-main-button").text("logout");
-        $("#header-main-button").attr("href", "/logout");
-        break;
 }
