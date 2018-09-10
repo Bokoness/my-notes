@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 let bodyParser = require("body-parser");
 let mysql= require("mysql");
+let auth = require("../middleware/authenticate");
 
 //connect to mysql
 let connection = mysql.createConnection({
@@ -11,9 +12,8 @@ let connection = mysql.createConnection({
     database: 'mynotes'
 });
 
-router.get("/notes", (req, res) => {
-    console.log(req.session);
-    let q = `SELECT * FROM users WHERE id=${req.session.userId}`;
+router.get("/notes", auth, (req, res) => {
+    let q = `SELECT * FROM users WHERE id=${req.session.token.id}`;
     connection.query(q, (err, user) => {
         if(err) {
              console.log(err);

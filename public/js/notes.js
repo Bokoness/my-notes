@@ -6,9 +6,9 @@ $(document).ready(() => {
     });
     
     $(".note").click(() => {
+        console.log($(this).attr("id"));
         $("#update-note-modal").modal({
-            onHidden: () => {
-            }
+            onHidden: () => {}
         }).modal('show')
     });
     

@@ -1,6 +1,6 @@
 <form id="update-note-modal" class="show-note ui modal form"  method="POST" action="notes/<%= note.id %>">
         <div class="header">
-            <input class="ui input" type="text" name="title" value="<%=note.title%>">
+            <input id="update-note-title" class="ui input" type="text" name="title" value=" <%=note.title%> ">
         </div>    
         <div class="content">
             <textarea name="content" row="2"><%=note.content%></textarea>

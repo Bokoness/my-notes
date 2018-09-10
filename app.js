@@ -8,6 +8,7 @@ let bcrypt = require("bcryptjs");
 let loginRoutes = require('./routes/login-routes');
 let registerRoute = require('./routes/register-route');
 let notesRoutes = require('./routes/notes-routes');
+let authenticate = require('./middleware/authenticate');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');

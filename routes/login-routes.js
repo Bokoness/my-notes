@@ -29,7 +29,12 @@ router.post("/login", (req, res) => {
                 console.log(error);
                 return res.render("login", {error});
             } else {
-                req.session.userId = user.id;
+                console.log("userId: " ,user.id);
+                let token = {
+                    id: user.id,
+                    hash: bcrypt.hashSync(user.id.toString(), 14),
+                }
+                req.session.token = token;
                 console.log("session added");
                 res.redirect("/notes");
             }   
